@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="测测你是什么动物！！！！一个有点诡异、非常不科学的食物小测试。">
+<title>测测你是什么动物！！！！</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000080'/%3E%3Ctext x='7' y='25' font-size='27' fill='%23ccff00'%3E?%3C/text%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;--acid:#d4ff00;--navy:#000080}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#171717;font-family:"Courier New","SimSun","宋体",monospace;background:repeating-linear-gradient(0deg,transparent 0 3px,#0003 3px 4px),radial-gradient(ellipse at 20% 10%,#6b176f,transparent 55%),linear-gradient(135deg,#020726,#123c38 65%,#000);padding:30px 18px 64px}
+body::before{content:"НЕ ЗАКРЫВАЙ ОКНО / 你来过这里 / НЕ ЗАКРЫВАЙ ОКНО";position:fixed;left:-80px;top:52%;color:#ffffff0d;font-size:clamp(28px,6vw,90px);white-space:nowrap;transform:rotate(-12deg);pointer-events:none}
+.desktop{position:relative;max-width:840px;margin:auto}
+.topline{display:flex;justify-content:space-between;gap:12px;color:#a3a8bd;font-size:11px;letter-spacing:2px;margin-bottom:22px}
+.blink{animation:blink 1.6s steps(1,end) infinite}
+@keyframes blink{50%{opacity:.25}}
+.masthead{color:var(--acid);text-shadow:3px 3px #a000a0;margin-bottom:22px}
+.eyebrow{font-size:12px;letter-spacing:3px;color:#ededed;text-shadow:none}
+h1{font-size:clamp(27px,5.5vw,49px);line-height:1.2;margin:10px 0;letter-spacing:-2px}
+.masthead p{font-size:12px;color:#ffb7ff;text-shadow:none;margin:0}
+.window{background:#c0c0c0;border:3px solid;border-color:#fff #444 #444 #fff;box-shadow:12px 12px #0007}
+.titlebar{background:linear-gradient(90deg,var(--navy),#574999,#8386cb);color:#fff;padding:6px 8px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:bold}
+.window-icons{letter-spacing:4px;color:#111;background:#c0c0c0;padding:0 3px;border:2px outset #eee;white-space:nowrap}
+.menu{font-size:12px;padding:8px;border-bottom:1px solid #808080;word-spacing:12px}
+.content{padding:24px;display:grid;grid-template-columns:1fr 190px;gap:26px}
+.warning{grid-column:1/-1;background:#fff4b8;border:1px dashed #806d00;padding:9px 12px;font-size:12px;line-height:1.6}
+.question-number{color:#555;font-size:11px;letter-spacing:2px}
+h2{margin:8px 0 18px;font-size:25px;line-height:1.4}
+.options{display:grid;gap:8px}
+.option-row{display:flex;gap:6px;align-items:stretch}
+button{font:inherit;cursor:pointer;color:#111}
+.answer{display:flex;align-items:center;gap:12px;text-align:left;padding:12px;width:100%;background:linear-gradient(#fafafa,#d0d0d0);border:2px solid;border-color:#fff #777 #777 #fff;font-size:15px;min-height:48px}
+.answer:hover{background:var(--acid)}
+.answer:active,.reset:active{border-color:#777 #fff #fff #777}
+button:focus-visible,a:focus-visible{outline:3px solid #b000b8;outline-offset:3px}
+.num{color:#666;font-size:11px}
+.outlink{display:flex;align-items:center;justify-content:center;min-width:70px;background:#dce3f5;border:2px outset white;color:var(--navy);font-size:12px;white-space:nowrap;padding:0 8px}
+.sidebar{background:#090b16;border:2px inset #eee;color:#b6ccbb;padding:14px;font-size:11px;line-height:1.9;text-align:center;align-self:start}
+.eye{height:86px;margin:12px 0 20px;display:flex;justify-content:center;align-items:center;font-size:57px;letter-spacing:4px;color:var(--acid);text-shadow:4px 0 #f0f}
+.sidebar hr{border:0;border-top:1px dashed #658275;margin:18px 0}
+.stamp{border:2px solid #e9a9cf;color:#e9a9cf;padding:6px;transform:rotate(-6deg);margin:20px 0 12px;font-size:15px}
+.status{display:flex;flex-wrap:wrap;gap:4px;padding:6px;font-size:11px}
+.status span{border:1px inset #ddd;padding:5px;flex:1;white-space:nowrap}
+.footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#90a49c;font-size:11px;margin:22px 0;line-height:1.8}
+.counter{background:#000;color:#0f0;border:2px inset #888;padding:2px 7px;letter-spacing:3px}
+.taskbar{position:fixed;bottom:0;left:0;right:0;background:#c0c0c0;border-top:2px solid white;display:flex;justify-content:space-between;gap:10px;padding:6px 10px;font-size:11px;z-index:2}
+.taskbar strong{border:2px outset #fff;padding:4px 9px}.taskbar span{align-self:center}
+[hidden]{display:none!important}
+.result{grid-column:1/-1;text-align:center;padding:10px 0 18px}
+.result h2{font-size:clamp(23px,4vw,34px)}
+.portrait{background:repeating-linear-gradient(0deg,#0000 0 3px,#ffffff0a 3px 4px),radial-gradient(ellipse,#5e386b,#101129 70%);border:4px ridge #aaa;max-width:330px;margin:18px auto;padding:24px;font-size:84px;line-height:1.4;position:relative}
+.portrait::after{content:"SPECIMEN FOUND / 样本已找到";display:block;font-size:10px;color:var(--acid);letter-spacing:2px}
+.animal{font-size:clamp(30px,6vw,48px);font-weight:bold;color:var(--navy);text-shadow:2px 2px #fff;margin:14px 0;overflow-wrap:anywhere}
+.result p{font-size:12px;line-height:1.8}
+.reset{background:linear-gradient(#fff,#aaa);border:3px outset #eee;padding:12px 25px;margin-top:12px;font-size:14px}
+@media(max-width:600px){body{padding:20px 12px 65px}.content{padding:16px;grid-template-columns:1fr;gap:18px}.sidebar{display:none}.topline{font-size:9px;letter-spacing:1px}.window{box-shadow:6px 6px #0007}.menu{word-spacing:3px}.answer{font-size:14px;padding:11px 8px;gap:8px}.outlink{min-width:56px;padding:0 4px}.taskbar .connection{display:none}}
+@media(prefers-reduced-motion:reduce){.blink{animation:none}}
+</style>
+</head>
+<body>
+<main class="desktop">
+<div class="topline"><span>ЗОО / ANIMAL IDENTIFICATION</span><span class="blink">● 信号不明</span></div>
+<header class="masthead"><div class="eyebrow">★ 完全破解版 · 无需注册 ★</div><h1>测测你是什么动物！！！！</h1><p>2001 年内部流出版 / 请不要喂食显示器</p></header>
+<section class="window" aria-label="动物测试程序">
+<div class="titlebar"><span>▣ animal_test_FINAL_final.exe</span><span class="window-icons" aria-hidden="true">_ □ ×</span></div>
+<div class="menu" aria-hidden="true">文件(F) 命运(D) 帮助(?) <span style="float:right;color:#666">UNREGISTERED</span></div>
+<div class="content">
+<div class="warning">⚠ 系统提示：你的物种尚未激活。请选择一种食物。<br><span style="color:#716340">（装饰性警告 · 只是一个不科学的小测试）</span></div>
+<section id="quiz" aria-labelledby="question"><div class="question-number">QUESTION 01 / 01</div><h2 id="question">你喜欢吃什么？</h2>
+<div class="options">
+<button class="answer" type="button" data-answer="0"><span class="num" aria-hidden="true">[01]</span>仙草</button>
+<button class="answer" type="button" data-answer="1"><span class="num" aria-hidden="true">[02]</span>芋泥</button>
+<button class="answer" type="button" data-answer="2"><span class="num" aria-hidden="true">[03]</span>虎皮蛋糕卷</button>
+<button class="answer" type="button" data-answer="3"><span class="num" aria-hidden="true">[04]</span>曼哈顿 (鸡尾酒)</button>
+<div class="option-row"><button class="answer" type="button" data-answer="4"><span class="num" aria-hidden="true">[05]</span>嘉樂酒吧下午茶</button><a class="outlink" href="https://www.klook.com/zh-HK/activity/155703-palazzo-versace-macau-la-scala-del-palazzo/" target="_blank" rel="noopener noreferrer" aria-label="在新标签页打开嘉樂酒吧下午茶的 Klook 页面">详情 ↗</a></div>
+<button class="answer" type="button" data-answer="5"><span class="num" aria-hidden="true">[06]</span>大黄派</button>
+<button class="answer" type="button" data-answer="6"><span class="num" aria-hidden="true">[07]</span>机关食堂一菜一汤</button>
+</div></section>
+<aside class="sidebar" id="sidebar" aria-label="装饰性系统面板"><div>КАМЕРА 07 · LIVE?</div><div class="eye" aria-hidden="true">◉ ◉</div><div>房间里没有其他动物。<br>大概没有。</div><hr><div>扫描模块 …… OK<br>科学依据 …… NOT FOUND<br>饥饿程度 …… ∞</div><div class="stamp">正版受害者</div><div>DO NOT WAKE THE SERVER</div></aside>
+<section class="result" id="result" aria-labelledby="result-title" hidden><div class="question-number">IDENTIFICATION COMPLETE</div><h2 id="result-title" tabindex="-1">恭喜你，你是！！！！！？</h2><div class="portrait"><span id="animal-icon" aria-hidden="true"></span></div><div class="animal" id="animal-name"></div><p id="chosen-food"></p><p>物种已确认。你可以继续假装是人类。<br><span style="color:#777">结果仅供玩乐 / никакой науки</span></p><button class="reset" type="button" id="reset">↶ 重新安装命运 / 再测一次</button></section>
+</div>
+<div class="status" role="status" aria-live="polite"><span id="status-text">等待投喂…</span><span>数据库：7 个物种</span><span>安全感：0%</span></div>
+</section>
+<footer class="footer"><span>你是第 <span class="counter">000013</span> 位迷路者（假的）<br>最佳观看环境：凌晨 03:17</span><span>© 2001–∞ 动物鉴定中心<br>本测试在你的浏览器里完成。</span></footer>
+<noscript><p style="color:white;background:#800;padding:12px">请启用 JavaScript 后进行测试。</p></noscript>
+</main>
+<div class="taskbar" aria-hidden="true"><strong>✦ 开始?</strong><span class="connection">局域网：连向梦里</span><span>▣ animal_test.exe</span><span>03:17</span></div>
+<script>
+'use strict';
+const animals = ['黑豹','兔子','西伯利亚虎','西伯利亚虎Senior','狐狸','蓝舌蜥蜴','长毛象'];
+const icons = ['🐈‍⬛','🐇','🐅','🐅 🎖️','🦊','🦎','🦣'];
+const foods = ['仙草','芋泥','虎皮蛋糕卷','曼哈顿 (鸡尾酒)','嘉樂酒吧下午茶','大黄派','机关食堂一菜一汤'];
+const quiz = document.getElementById('quiz');
+const result = document.getElementById('result');
+const sidebar = document.getElementById('sidebar');
+const statusText = document.getElementById('status-text');
+let lastAnswer = null;
+document.querySelectorAll('[data-answer]').forEach(button => {
+  button.addEventListener('click', () => {
+    const index = Number(button.dataset.answer);
+    lastAnswer = button;
+    document.getElementById('animal-name').textContent = animals[index];
+    document.getElementById('animal-icon').textContent = icons[index];
+    document.getElementById('chosen-food').textContent = '你选择了：' + foods[index];
+    quiz.hidden = true;
+    sidebar.hidden = true;
+    result.hidden = false;
+    statusText.textContent = '鉴定成功：' + animals[index];
+    document.getElementById('result-title').focus();
+  });
+});
+document.getElementById('reset').addEventListener('click', () => {
+  result.hidden = true;
+  quiz.hidden = false;
+  sidebar.hidden = false;
+  statusText.textContent = '等待投喂…';
+  if (lastAnswer) lastAnswer.focus();
+});
+</script>
+</body>
+</html>
+
