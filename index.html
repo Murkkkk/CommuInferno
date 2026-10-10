@@ -56,6 +56,9 @@ button:focus-visible,a:focus-visible{outline:3px solid #b000b8;outline-offset:3p
 .reset{background:linear-gradient(#fff,#aaa);border:3px outset #eee;padding:12px 25px;margin-top:12px;font-size:14px}
 @media(max-width:600px){body{padding:20px 12px 65px}.content{padding:16px;grid-template-columns:1fr;gap:18px}.sidebar{display:none}.topline{font-size:9px;letter-spacing:1px}.window{box-shadow:6px 6px #0007}.menu{word-spacing:3px}.answer{font-size:14px;padding:11px 8px;gap:8px}.outlink{min-width:56px;padding:0 4px}.taskbar .connection{display:none}}
 @media(prefers-reduced-motion:reduce){.blink{animation:none}}
+
+#more-info{width:min(340px,90vw);padding:3px;background:#c0c0c0;border:3px outset #eee;box-shadow:12px 12px #0007}
+#more-info::backdrop{background:#0005}#more-info .more-body{padding:28px;text-align:center}#more-info a{color:#000080;font-size:22px}#more-close{border:2px outset white;background:#c0c0c0}
 </style>
 </head>
 <body>
@@ -66,10 +69,10 @@ button:focus-visible,a:focus-visible{outline:3px solid #b000b8;outline-offset:3p
 <div class="titlebar"><span>▣ animal_test_FINAL_final.exe</span><span class="window-icons" aria-hidden="true">_ □ ×</span></div>
 <div class="menu" aria-hidden="true">文件(F) 命运(D) 帮助(?) <span style="float:right;color:#666">UNREGISTERED</span></div>
 <div class="content">
-<div class="warning">⚠ 系统提示：你的物种尚未激活。请选择一种食物。<br><span style="color:#716340">（警告 · 请不要在任何地方输入你的钱包私钥）</span></div>
-<section id="quiz" aria-labelledby="question"><div class="question-number">QUESTION 01 / 01</div><h2 id="question">你最喜欢吃什么？</h2>
+<div class="warning">⚠ 系统提示：你的物种尚未激活。请选择一种食物。<br><span style="color:#716340">（装饰性警告 · 只是一个不科学的小测试）</span></div>
+<section id="quiz" aria-labelledby="question"><div class="question-number">QUESTION 01 / 01</div><h2 id="question">你喜欢吃什么？</h2>
 <div class="options">
-<button class="answer" type="button" data-answer="0"><span class="num" aria-hidden="true">[01]</span>仙草冻</button>
+<button class="answer" type="button" data-answer="0"><span class="num" aria-hidden="true">[01]</span>仙草</button>
 <button class="answer" type="button" data-answer="1"><span class="num" aria-hidden="true">[02]</span>芋泥</button>
 <button class="answer" type="button" data-answer="2"><span class="num" aria-hidden="true">[03]</span>虎皮蛋糕卷</button>
 <button class="answer" type="button" data-answer="3"><span class="num" aria-hidden="true">[04]</span>曼哈顿 (鸡尾酒)</button>
@@ -77,25 +80,28 @@ button:focus-visible,a:focus-visible{outline:3px solid #b000b8;outline-offset:3p
 <button class="answer" type="button" data-answer="5"><span class="num" aria-hidden="true">[06]</span>大黄派</button>
 <button class="answer" type="button" data-answer="6"><span class="num" aria-hidden="true">[07]</span>机关食堂一菜一汤</button>
 </div></section>
-<aside class="sidebar" id="sidebar" aria-label="装饰性系统面板"><div>КАМЕРА 07 · LIVE?</div><div class="eye" aria-hidden="true">◉ ◉</div><div>房间里没有其他动物。<br>大概没有。</div><hr><div>扫描模块 …… OK<br>科学依据 …… NOT FOUND<br>测试收费：100.00 USDT</div><div class="stamp">还在为正版付费？</div><div>DO NOT WAKE THE</div></aside>
-<section class="result" id="result" aria-labelledby="result-title" hidden><div class="question-number">IDENTIFICATION COMPLETE</div><h2 id="result-title" tabindex="-1">恭喜你，你是！！！！！？</h2><div class="portrait"><span id="animal-icon" aria-hidden="true"></span></div><div class="animal" id="animal-name"></div><p id="chosen-food"></p><p>物种已确认。穿上吧，你可以走了。<br><span style="color:#777">结果仅供玩乐 / никакой науки</span></p><button class="reset" type="button" id="reset">↶ 重新安装命运 / 再测一次</button></section>
+<aside class="sidebar" id="sidebar" aria-label="装饰性系统面板"><div>КАМЕРА 07 · LIVE?</div><div class="eye" aria-hidden="true">◉ ◉</div><div>房间里没有其他动物。<br>大概没有。</div><hr><div>扫描模块 …… OK<br>科学依据 …… NOT FOUND<br>饥饿程度 …… ∞</div><div class="stamp">正版受害者</div><div>DO NOT WAKE THE SERVER</div></aside>
+<section class="result" id="result" aria-labelledby="result-title" hidden><div class="question-number">IDENTIFICATION COMPLETE</div><h2 id="result-title" tabindex="-1">恭喜你，你是！！！！！？</h2><div class="portrait"><span id="animal-icon" aria-hidden="true"></span></div><div class="animal" id="animal-name"></div><p id="chosen-food"></p><p>物种已确认。你可以继续假装是人类。<br><span style="color:#777">结果仅供玩乐 / никакой науки</span></p><button class="reset" type="button" id="reset">↶ 重新安装命运 / 再测一次</button></section>
 </div>
-<div class="status" role="status" aria-live="polite"><span id="status-text">等待投喂…</span><span>数据库：7 个物种</span><span>置信度：0%</span></div>
+<div class="status" role="status" aria-live="polite"><span id="status-text">等待投喂…</span><span>数据库：7 个物种</span><span>安全感：0%</span></div>
 </section>
-<footer class="footer"><span>你是第 <span class="counter">000013</span> 位迷路者（假的）<br>最佳观看环境：凌晨 03:17</span><span>© 2001–∞ 动物鉴定中心(AIC)<br>本测试在你的浏览器里完成。</span></footer>
+<footer class="footer"><span>你是第 <span class="counter">000013</span> 位迷路者（假的）<br>最佳观看环境：凌晨 03:17</span><span>© 2001–∞ 动物鉴定中心<br>本测试在你的浏览器里完成。</span></footer>
 <noscript><p style="color:white;background:#800;padding:12px">请启用 JavaScript 后进行测试。</p></noscript>
 </main>
 <div class="taskbar" aria-hidden="true"><strong>✦ 开始?</strong><span class="connection">局域网：连向梦里</span><span>▣ animal_test.exe</span><span>03:17</span></div>
+<dialog id="more-info"><div class="titlebar"><span>【占位符】</span><button id="more-close" type="button" aria-label="【占位符】">×</button></div><div class="more-body"><a href="dissection/">了解更多？</a></div></dialog>
 <script>
 'use strict';
 const animals = ['黑豹','兔子','西伯利亚虎','西伯利亚虎Senior','狐狸','蓝舌蜥蜴','长毛象'];
 const icons = ['🐈‍⬛','🐇','🐅','🐅 🎖️','🦊','🦎','🦣'];
-const foods = ['仙草冻','芋泥','虎皮蛋糕卷','曼哈顿 (鸡尾酒)','嘉樂酒吧下午茶','大黄派','机关食堂一菜一汤'];
+const foods = ['仙草','芋泥','虎皮蛋糕卷','曼哈顿 (鸡尾酒)','嘉樂酒吧下午茶','大黄派','机关食堂一菜一汤'];
 const quiz = document.getElementById('quiz');
 const result = document.getElementById('result');
 const sidebar = document.getElementById('sidebar');
 const statusText = document.getElementById('status-text');
 let lastAnswer = null;
+document.getElementById('more-close').addEventListener('click',()=>document.getElementById('more-info').close());
+document.getElementById('more-info').addEventListener('close',()=>document.getElementById('result-title').focus());
 document.querySelectorAll('[data-answer]').forEach(button => {
   button.addEventListener('click', () => {
     const index = Number(button.dataset.answer);
@@ -108,6 +114,7 @@ document.querySelectorAll('[data-answer]').forEach(button => {
     result.hidden = false;
     statusText.textContent = '鉴定成功：' + animals[index];
     document.getElementById('result-title').focus();
+    if(index===0||index===1)document.getElementById('more-info').showModal();
   });
 });
 document.getElementById('reset').addEventListener('click', () => {
@@ -120,4 +127,3 @@ document.getElementById('reset').addEventListener('click', () => {
 </script>
 </body>
 </html>
-
