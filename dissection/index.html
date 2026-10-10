@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>肢解图</title>
+<title>肢解图（正位）</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#030306;color:#eee;font-family:"Courier New",SimSun,monospace}main{max-width:1100px;margin:0 auto;padding:16px 10px 35px}svg{display:block;width:100%;height:auto;overflow:visible}.piece{cursor:pointer;outline:none;transition:filter .2s,transform .2s;transform-box:fill-box;transform-origin:center}.piece .visual{opacity:0;pointer-events:none;transition:transform .45s ease,opacity .45s ease}.piece:hover .visual,.piece:focus-visible .visual,.piece.active .visual{opacity:1;filter:url(#glow);transform:translateY(-1.5px)}.outline{fill:none;stroke:#d5edff;stroke-width:2;stroke-dasharray:6 5;pointer-events:none;opacity:0}.guides .outline{opacity:.6}.bar{display:flex;justify-content:space-between;gap:10px;padding:8px;border:2px outset #eee;background:#bcbcbc;color:#111;font-size:12px;margin-bottom:14px}.bar button{font:inherit;background:#ddd;border:2px outset white;cursor:pointer;min-height:30px}dialog{width:min(420px,90vw);padding:3px;background:#bcbcbc;color:#111;border:3px outset #eee;box-shadow:12px 12px #0009;font-family:inherit}dialog::backdrop{background:#0006}.titlebar{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,#000080,#8454af);padding:5px 8px;color:white;font-size:13px}.titlebar button{font:inherit;background:#bcbcbc;border:2px outset white;cursor:pointer;min-width:30px;min-height:30px}.body{padding:22px;min-height:150px;background:linear-gradient(140deg,#dcdcdc,#b6b6b6)}h2{font-size:21px}p{font-size:15px;line-height:1.8}.status{border:2px inset #ddd;margin:4px;padding:5px;font-size:11px}@media(prefers-reduced-motion:reduce){.piece{transition:none}.piece:hover .visual,.piece:focus-visible .visual,.piece.active .visual{transform:none}}
 
@@ -10,16 +10,21 @@
 .piece.character:hover .visual,.piece.character:focus-visible .visual,.piece.character.active .visual{filter:url(#characterLift);transform:translateY(-2.5px)}
 @media(prefers-reduced-motion:reduce){.piece .visual{transition:none}.piece:hover .visual,.piece:focus-visible .visual,.piece.active .visual{transform:none}}
 .bar>span{font-size:28px;font-weight:bold;align-self:center}
+
+#black-sequence{position:fixed;inset:0;z-index:1000;margin:0;padding:16px;background:#000;color:#fff;overflow:hidden;font-family:'DotGothic16',sans-serif;font-size:clamp(21px,3vw,34px);line-height:1.55;overflow-wrap:anywhere;user-select:none}
+#black-sequence[hidden]{display:none}
+body.sequence-active{overflow:hidden}
 </style>
 <link rel="stylesheet" href="../overarching/global.css">
 <script src="../overarching/global.js" defer></script>
-<main><div class="bar"><span>肢解图</span><button id="guides" type="button" aria-label="【占位符】" aria-pressed="false">◇</button></div>
-<svg id="scene" viewBox="0 0 1536 1612" xmlns="http://www.w3.org/2000/svg" aria-label="肢解图">
+<main><div class="bar"><span>肢解图（正位）</span><button id="guides" type="button" aria-label="【占位符】" aria-pressed="false">◇</button></div>
+<svg id="scene" viewBox="0 0 1536 1612" xmlns="http://www.w3.org/2000/svg" aria-label="肢解图（正位）">
 <defs><filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="10" flood-color="#000" flood-opacity=".25"/><feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#dae7ff" flood-opacity=".28"/><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#dae7ff" flood-opacity=".18"/></filter><filter id="characterLift" x="-15%" y="-15%" width="130%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#000" flood-opacity=".38"/><feComponentTransfer><feFuncR type="linear" slope="1.035"/><feFuncG type="linear" slope="1.035"/><feFuncB type="linear" slope="1.035"/></feComponentTransfer></filter></defs>
 <image href="../explore/art.png" width="1536" height="1612"/>
 <g id="pieces"></g>
 </svg></main>
 <dialog id="info" aria-labelledby="heading"><div class="titlebar"><span>Ошибка сервера</span><button id="close" type="button" aria-label="【占位符】">×</button></div><div class="body"><h2 id="heading">【占位符】</h2><p id="description">【占位符】</p></div><div class="status"><time id="dialog-time"></time></div></dialog>
+<section id="black-sequence" lang="ja" hidden tabindex="-1"><div id="sequence-text"></div></section>
 <script>
 'use strict';
 // Coordinates refer to the supplied annotation's 1536 × 1612 display space.
@@ -36,7 +41,7 @@ const regions = [
  {id:9,points:'1287,65 1417,58 1476,89 1507,189 1530,211 1527,260 1518,365 1488,395 1375,409 1223,380 1214,319 1235,165'},
  {id:10,points:'1398,495 1489,496 1498,532 1400,536'},
  {id:11,points:'1265,485 1358,485 1365,635 1264,638'},
- {id:12,points:'1171,424 1190,432 1191,611 1218,650 1222,711 1202,718 1189,702 1173,703 1174,715 1151,717 1146,702 1130,703 1130,649 1163,645'},
+ {id:12,points:'1133,389 1228,396 1229,591 1258,630 1260,747 1210,756 1181,740 1137,755 1092,741 1092,615 1125,610'},
  {id:13,points:'1333,696 1380,702 1405,699 1440,705 1474,726 1485,775 1467,811 1425,821 1396,809 1358,841 1324,840 1320,814 1293,794 1287,750 1307,714'},
  {id:14,points:'1307,928 1358,933 1374,941 1360,986 1376,1056 1360,1069 1313,1063 1305,1027 1313,987 1302,953'},
  {id:15,points:'1425,888 1462,894 1476,887 1493,904 1494,1123 1482,1140 1467,1136 1450,1141 1428,1126'},
@@ -77,9 +82,82 @@ const svg=document.getElementById('scene');
 const defs=svg.querySelector('defs');
 const layer=document.getElementById('pieces');
 const dialog=document.getElementById('info');
-const introductions=[["衬衫", "浆洗好的白衬衫。板正笔挺，几乎像纸一样的触感。大概用了很多的化学洗剂才能达到这个程度。完全没有气味啊。"], ["光学聚焦器", "地狱没有阳光。“不见天日”，对么？被用以聚集烛光，火光，目光"], ["这是啥", "这是啥？哪个机器上掉下来的橡胶盖。有鬼要倒霉了。"], ["墨水", "一瓶墨水。"], ["墨水", "另一瓶墨水。"], ["液体容器（有星形标识）", "和大厂工牌一个道理。"], ["点燃器", "它会让你很烫！小心点。"], ["被点燃器", "卷着一些烟草……我希望只是烟草。"], ["保护你的财物", "带着它去赚取更多财产吧，没有生产资料的可怜人。"], ["背包底部肮脏的小纸片……别说你没有。", "没人知道这是什么。翻开这张口香糖包装纸，你也许会看到一串女人用眼线胶笔写下的电话号码。"], ["止痛药", "不是那种不需要处方的垃圾货。你、你在暗示这是吗啡的类似物吗？啊……奇怪的是。他只用它们来克制头痛，而并不滥用。"], ["尖锐物品（请进黄色医疗废物箱）", "因为他更爱滥用这个。"], ["薄荷味粒状清口糖", "是么？里面也许有几粒西地那非。不，只是……也许。"], ["亲人", "死者的遗物。"], ["街上发的能量棒", "暂时还饿不死。"], ["黑框，黑框", "黑框，黑框……死人有什么好黑框的？全家福而已，就差一个人就可以变成全家大遗照了。"], ["Михаил Юрьевич Игнатов", "完完全全是一个普通的，可悲的男人。拼尽全力也只是存活着而已。已经完全忘记存活的意义是什么，却也想要活下去的人。"], ["Marzanna", "想让他死的人。(don't take it personally!)"], ["专武", "收割灵魂用的镰刀。"], ["笔记本，以及", "世界上最难搞定的客户档案。"], ["身份证件", "丢了这个，你可得费点功夫才能和长官们证明你是你了。"], ["bullshit", "本故事纯属虚构，人物、背景、情节皆为艺术创作，请勿与现实人物及事件对号入座。"], ["肛塞", "别那么叫钢笔！真不礼貌。"], ["培养皿", "我的意思是，浴缸。"]];
+const introductions=[["衬衫", "浆洗好的白衬衫。板正笔挺，几乎像纸一样的触感。大概用了很多的化学洗剂才能达到这个程度。完全没有气味啊。"], ["光学聚焦器", "地狱没有阳光。“不见天日”，对么？被用以聚集烛光，火光，目光"], ["这是啥", "这是啥？哪个机器上掉下来的橡胶盖。有鬼要倒霉了。"], ["墨水", "一瓶墨水。"], ["墨水", "另一瓶墨水。"], ["液体容器（有星形标识）", "和大厂工牌一个道理。"], ["点燃器", "它会让你很烫！小心点。"], ["被点燃器", "卷着一些烟草……我希望只是烟草。"], ["保护你的财物", "带着它去赚取更多财产吧，没有生产资料的可怜人。"], ["背包底部肮脏的小纸片……别说你没有。", "没人知道这是什么。翻开这张口香糖包装纸，你也许会看到一串女人用眼线胶笔写下的电话号码。"], ["止痛药", "不是那种不需要处方的垃圾货。你、你在暗示这是吗啡的类似物吗？啊……奇怪的是。他只用它们来克制头痛，而并不滥用。"], ["尖锐物品（请进黄色医疗废物箱）", "因为他更爱滥用这个。"], ["薄荷味粒状清口糖", "是么？里面也许有几粒西地那非。不，只是……也许。"], ["亲人", "死者的遗物。"], ["街上发的能量棒", "暂时还饿不死。"], ["黑框，黑框", "黑框，黑框……死人有什么好黑框的？全家福而已，就差一个人就可以变成全家大遗照了。"], ["Михаил Юрьевич Игнатов", "完完全全是一个普通的，可悲的男人。拼尽全力也只是存活着而已。已经完全忘记存活的意义是什么却也想要活下去的人。"], ["Marzanna", "想让他死的人。(don't take it personally!)"], ["专武", "收割灵魂用的镰刀。"], ["笔记本，以及", "世界上最难搞定的客户档案。"], ["身份证件", "丢了这个，你可得费点功夫才能和长官们证明你是你了。"], ["bullshit", "本故事纯属虚构，人物、背景、情节皆为艺术创作，请勿与现实人物及事件对号入座。"], ["肛塞", "别那么叫钢笔！真不礼貌。"], ["培养皿", "我的意思是，浴缸。"]];
 let selected=null;
-regions.sort((a,b)=>(a.id===24?-1:b.id===24?1:0));
+let regionClicks=0;
+let sequenceAppearances=0;
+let sequenceActive=false;
+let sequenceTimer=null;
+const sequenceWords=["肉親", "代替可能", "信仰", "党派", "君との約束", "任務完了", "納期遵守率", "必達事項", "職務専念義務", "ノルマ", "党議拘束", "適正処理", "業務命令", "身内", "標的", "敬愛する", "困惑", "地獄", "決裁", "死刑執行", "達成不能", "方針転換"];
+const sequenceScreen=document.getElementById('black-sequence');
+const sequenceText=document.getElementById('sequence-text');
+let sequencePending='';
+let sequencePrevious=null;
+let sequenceQueue=[];
+function nextSequenceWord(){
+ if(!sequenceQueue.length){
+  sequenceQueue=[...sequenceWords];
+  for(let i=sequenceQueue.length-1;i>0;i--){
+   const j=Math.floor(Math.random()*(i+1));
+   [sequenceQueue[i],sequenceQueue[j]]=[sequenceQueue[j],sequenceQueue[i]];
+  }
+  if(sequenceQueue[sequenceQueue.length-1]===sequencePrevious){
+   [sequenceQueue[0],sequenceQueue[sequenceQueue.length-1]]=[sequenceQueue[sequenceQueue.length-1],sequenceQueue[0]];
+  }
+ }
+ sequencePrevious=sequenceQueue.pop();
+ return sequencePrevious;
+}
+function typeSequence(){
+ if(!sequenceActive)return;
+ if(!sequencePending){
+  sequencePending=nextSequenceWord()+'、';
+ }
+ const letter=sequencePending[0];sequencePending=sequencePending.slice(1);
+ sequenceText.append(document.createTextNode(letter));
+ if(sequenceText.offsetHeight>sequenceScreen.clientHeight-32){sequenceText.lastChild.remove();return;}
+ sequenceTimer=setTimeout(typeSequence,24);
+}
+async function startSequence(){
+ sequenceActive=true;sequenceAppearances++;sequenceQueue=[];sequencePrevious=null;
+ if(dialog.open)dialog.close();
+ document.body.classList.add('sequence-active');
+ sequenceScreen.hidden=false;sequenceScreen.focus();
+ try{await document.fonts.load('24px DotGothic16');}catch(error){/* System fallback remains readable. */}
+ if(!sequenceActive)return;
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+  while(sequenceText.offsetHeight<=sequenceScreen.clientHeight-32){
+   const part=document.createTextNode(nextSequenceWord()+'、');
+   sequenceText.append(part);
+   if(sequenceText.offsetHeight>sequenceScreen.clientHeight-32){part.remove();break;}
+  }
+ }else typeSequence();
+}
+function exitSequence(){
+ if(!sequenceActive)return;
+ sequenceActive=false;clearTimeout(sequenceTimer);sequenceScreen.hidden=true;
+ document.body.classList.remove('sequence-active');
+ sequenceText.replaceChildren();sequencePending='';regionClicks=0;
+ if(selected)selected.focus();
+}
+sequenceScreen.addEventListener('click',exitSequence);
+document.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&sequenceActive)exitSequence();
+});
+// Lowest first: bathtub, figures, then foreground objects.
+const priority=region=>region.id===24?0:(region.id===17||region.id===18)?1:2;
+regions.sort((a,b)=>priority(a)-priority(b));
+const regionPath=region=>characterPaths[region.id]||('M'+region.points.replaceAll(' ',' L')+' Z');
+// Each inverse clip excludes one higher-priority region. Nesting intersects
+// these clips, subtracting their union without XOR overlap artifacts.
+regions.forEach(region=>{
+ const exclusion=document.createElementNS(svgNS,'clipPath');
+ exclusion.id='outside-'+region.id;exclusion.setAttribute('clipPathUnits','userSpaceOnUse');
+ const shape=document.createElementNS(svgNS,'path');
+ shape.setAttribute('d','M-1,-1 H1537 V1613 H-1 Z '+regionPath(region));
+ shape.setAttribute('clip-rule','evenodd');shape.setAttribute('fill-rule','evenodd');
+ exclusion.append(shape);defs.append(exclusion);
+});
 regions.forEach(region=>{
  const clip=document.createElementNS(svgNS,'clipPath');clip.id='region-'+region.id;
  const polygon=document.createElementNS(svgNS,characterPaths[region.id]?'path':'polygon');
@@ -97,14 +175,21 @@ regions.forEach(region=>{
  const image=document.createElementNS(svgNS,'image');image.setAttribute('href','../explore/art.png');image.setAttribute('width','1536');image.setAttribute('height','1612');image.setAttribute('mask','url(#'+mask.id+')');image.setAttribute('pointer-events','none');visual.append(image);group.append(visual);}
  const outline=polygon.cloneNode();outline.classList.add('outline');group.append(outline);
  // Transparent polygon owns hit testing, including black space in the marked area.
- const hit=polygon.cloneNode();hit.setAttribute('fill','transparent');hit.setAttribute('pointer-events','all');group.append(hit);
+ const hit=polygon.cloneNode();hit.setAttribute('fill','transparent');hit.setAttribute('pointer-events','all');
+ let hitLayer=hit;
+ for(const higher of regions.slice(regions.indexOf(region)+1)){
+  const wrapper=document.createElementNS(svgNS,'g');
+  wrapper.setAttribute('clip-path','url(#outside-'+higher.id+')');
+  wrapper.append(hitLayer);hitLayer=wrapper;
+ }
+ group.append(hitLayer);
  if(isArm)return;
- const show=()=>{const [title,description]=introductions[region.id-1];document.getElementById('heading').textContent=title;document.getElementById('description').textContent=description;selected=group;group.classList.add('active');dialog.dataset.region=region.id;const now=new Date();const clock=document.getElementById('dialog-time');clock.dateTime=now.toISOString();clock.textContent=now.toLocaleString();dialog.showModal();};
+ const show=()=>{if(sequenceActive)return;regionClicks++;if(regionClicks>=(sequenceAppearances===0?10:regions.length)){selected=group;startSequence();return;}const [title,description]=introductions[region.id-1];document.getElementById('heading').textContent=title;document.getElementById('description').textContent=description;selected=group;group.classList.add('active');dialog.dataset.region=region.id;const now=new Date();const clock=document.getElementById('dialog-time');clock.dateTime=now.toISOString();clock.textContent=now.toLocaleString('zh-CN',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});dialog.showModal();};
  group.addEventListener('click',show);group.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();show();}});layer.append(group);
 });
 document.getElementById('close').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{if(event.target===dialog){const box=dialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();}});
-dialog.addEventListener('close',()=>{if(selected){selected.classList.remove('active');selected.focus();}});
+dialog.addEventListener('close',()=>{if(selected){selected.classList.remove('active');if(!sequenceActive)selected.focus();}});
 document.getElementById('guides').addEventListener('click',event=>{const visible=svg.classList.toggle('guides');event.currentTarget.setAttribute('aria-pressed',String(visible));});
 </script>
 </html>

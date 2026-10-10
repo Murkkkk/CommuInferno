@@ -1,1 +1,18 @@
-/* Shared styles for all pages. Add site-wide overrides here. */
+/* Shared styles for all pages. */
+@font-face {
+  font-family: 'Site Bitmap Song';
+  src: url('fonts/WenQuanYi-Bitmap-Song-16px.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Downloaded alternative, reserved for future use. */
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('fonts/DotGothic16-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+body { font-family: 'Courier New', SimSun, '宋体', 'Site Bitmap Song', serif; }
+button, input, select, textarea, dialog { font-family: inherit; }
