@@ -82,7 +82,7 @@ const svg=document.getElementById('scene');
 const defs=svg.querySelector('defs');
 const layer=document.getElementById('pieces');
 const dialog=document.getElementById('info');
-const introductions=[["衬衫", "浆洗好的白衬衫。板正笔挺，几乎像纸一样的触感。大概用了很多的化学洗剂才能达到这个程度。完全没有气味啊。"], ["光学聚焦器", "地狱没有阳光。“不见天日”，对么？被用以聚集烛光，火光，目光"], ["这是啥", "这是啥？哪个机器上掉下来的橡胶盖。有鬼要倒霉了。"], ["墨水", "一瓶墨水。"], ["墨水", "另一瓶墨水。"], ["液体容器（有星形标识）", "和大厂工牌一个道理。"], ["点燃器", "它会让你很烫！小心点。"], ["被点燃器", "卷着一些烟草……我希望只是烟草。"], ["保护你的财物", "带着它去赚取更多财产吧，没有生产资料的可怜人。"], ["背包底部肮脏的小纸片……别说你没有。", "没人知道这是什么。翻开这张口香糖包装纸，你也许会看到一串女人用眼线胶笔写下的电话号码。"], ["止痛药", "不是那种不需要处方的垃圾货。你、你在暗示这是吗啡的类似物吗？啊……奇怪的是。他只用它们来克制头痛，而并不滥用。"], ["尖锐物品（请进黄色医疗废物箱）", "因为他更爱滥用这个。"], ["薄荷味粒状清口糖", "是么？里面也许有几粒西地那非。不，只是……也许。"], ["亲人", "死者的遗物。"], ["街上发的能量棒", "暂时还饿不死。"], ["黑框，黑框", "黑框，黑框……死人有什么好黑框的？全家福而已，就差一个人就可以变成全家大遗照了。"], ["Михаил Юрьевич Игнатов", "完完全全是一个普通的，可悲的男人。拼尽全力也只是存活着而已。已经完全忘记存活的意义是什么却也想要活下去的人。"], ["Marzanna", "想让他死的人。(don't take it personally!)"], ["专武", "收割灵魂用的镰刀。"], ["笔记本，以及", "世界上最难搞定的客户档案。"], ["身份证件", "丢了这个，你可得费点功夫才能和长官们证明你是你了。"], ["bullshit", "本故事纯属虚构，人物、背景、情节皆为艺术创作，请勿与现实人物及事件对号入座。"], ["肛塞", "别那么叫钢笔！真不礼貌。"], ["培养皿", "我的意思是，浴缸。"]];
+const introductions=[["衬衫", "浆洗好的白衬衫。板正笔挺，几乎像纸一样的触感。大概用了很多的化学洗剂才能达到这个程度。完全没有气味啊。"], ["光学聚焦器", "地狱没有阳光。“不见天日”，对么？被用以聚集烛光，火光，目光"], ["这是啥", "这是啥？哪个机器上掉下来的橡胶盖。有鬼要倒霉了。"], ["墨水", "一瓶墨水。"], ["墨水", "另一瓶墨水。"], ["液体容器（有星形标识）", "和大厂工牌一个道理。"], ["点燃器", "它会让你很烫！小心点。"], ["被点燃器", "卷着一些烟草……我希望只是烟草。"], ["保护你的财物", "带着它去赚取更多财产吧，没有生产资料的可怜人。"], ["背包底部肮脏的小纸片……别说你没有。", "没人知道这是什么。翻开这张口香糖包装纸，你也许会看到一串女人用眼线胶笔写下的电话号码。"], ["止痛药", "不是那种不需要处方的垃圾货。你、你在暗示这是吗啡的类似物吗？啊……奇怪的是。他只用它们来克制头痛，而并不滥用。"], ["尖锐物品（请进黄色医疗废物箱）", "因为他更爱滥用这个。"], ["薄荷味粒状清口糖", "是么？里面也许有几粒西地那非。不，只是……也许。"], ["亲人", "死者的遗物。"], ["街上发的能量棒", "暂时还饿不死。"], ["黑框，黑框", "黑框，黑框……死人有什么好黑框的？全家福而已，就差一个人就可以变成全家大遗照了。"], ["Михаил Юрьевич Игнатов", "完完全全是一个普通的，可悲的男人。拼尽全力也只是存活着而已。已经完全忘记存活的意义是什么却也想要活下去的人。"], ["Marzanna", "想让他死的人。(don't take it personally!)"], ["专武", "收割灵魂用的镰刀。"], ["笔记本，以及", "世界上最难搞定的目标档案。"], ["身份证件", "丢了这个，你可得费点功夫才能和长官们证明你是你了。"], ["bullshit", "本故事纯属虚构，人物、背景、情节皆为艺术创作，请勿与现实人物及事件对号入座。"], ["肛塞", "别那么叫钢笔！真不礼貌。"], ["培养皿", "我的意思是，浴缸。"]];
 let selected=null;
 let regionClicks=0;
 let sequenceAppearances=0;
@@ -116,7 +116,7 @@ function typeSequence(){
  const letter=sequencePending[0];sequencePending=sequencePending.slice(1);
  sequenceText.append(document.createTextNode(letter));
  if(sequenceText.offsetHeight>sequenceScreen.clientHeight-32){sequenceText.lastChild.remove();return;}
- sequenceTimer=setTimeout(typeSequence,24);
+ sequenceTimer=setTimeout(typeSequence,matchMedia('(prefers-reduced-motion: reduce)').matches?60:24);
 }
 async function startSequence(){
  sequenceActive=true;sequenceAppearances++;sequenceQueue=[];sequencePrevious=null;
@@ -125,13 +125,7 @@ async function startSequence(){
  sequenceScreen.hidden=false;sequenceScreen.focus();
  try{await document.fonts.load('24px DotGothic16');}catch(error){/* System fallback remains readable. */}
  if(!sequenceActive)return;
- if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-  while(sequenceText.offsetHeight<=sequenceScreen.clientHeight-32){
-   const part=document.createTextNode(nextSequenceWord()+'、');
-   sequenceText.append(part);
-   if(sequenceText.offsetHeight>sequenceScreen.clientHeight-32){part.remove();break;}
-  }
- }else typeSequence();
+ typeSequence();
 }
 function exitSequence(){
  if(!sequenceActive)return;
