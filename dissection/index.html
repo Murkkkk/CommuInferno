@@ -15,12 +15,22 @@
 #black-sequence[hidden]{display:none}
 body.sequence-active{overflow:hidden}
 
+
+@media(hover:none) and (pointer:coarse){
+ .piece:not(.character) .visual{transition:transform .18s ease,opacity .18s ease}
+ .piece:not(.character):hover .visual{opacity:0;filter:none;transform:none}
+ .piece:not(.character).touch-feedback .visual,.piece:not(.character).active .visual{opacity:1;filter:url(#touchGlow);transform:translateY(var(--touch-lift,-18px))}
+}
+@media(hover:none) and (pointer:coarse) and (prefers-reduced-motion:reduce){
+ .piece:not(.character) .visual{transition:opacity .18s ease}
+ .piece:not(.character).touch-feedback .visual,.piece:not(.character).active .visual{transform:none}
+}
 </style>
 <link rel="stylesheet" href="../overarching/global.css">
 <script src="../overarching/global.js" defer></script>
 <main><div class="bar"><span>肢解图（正位）</span><button id="guides" type="button" aria-label="【占位符】" aria-pressed="false">◇</button></div>
 <svg id="scene" viewBox="0 0 1536 1612" xmlns="http://www.w3.org/2000/svg" aria-label="肢解图（正位）">
-<defs><filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="10" flood-color="#000" flood-opacity=".25"/><feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#dae7ff" flood-opacity=".28"/><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#dae7ff" flood-opacity=".18"/></filter><filter id="characterLift" x="-15%" y="-15%" width="130%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#000" flood-opacity=".38"/><feComponentTransfer><feFuncR type="linear" slope="1.035"/><feFuncG type="linear" slope="1.035"/><feFuncB type="linear" slope="1.035"/></feComponentTransfer></filter></defs>
+<defs><filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="10" flood-color="#000" flood-opacity=".25"/><feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#dae7ff" flood-opacity=".28"/><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#dae7ff" flood-opacity=".18"/></filter><filter id="characterLift" x="-15%" y="-15%" width="130%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#000" flood-opacity=".38"/><feComponentTransfer><feFuncR type="linear" slope="1.035"/><feFuncG type="linear" slope="1.035"/><feFuncB type="linear" slope="1.035"/></feComponentTransfer></filter><filter id="touchGlow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#000" flood-opacity=".4"/><feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#dae7ff" flood-opacity=".42"/><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#dae7ff" flood-opacity=".25"/></filter></defs>
 <image href="../explore/art.png" width="1536" height="1612"/>
 <g id="pieces"></g>
 </svg></main>
@@ -84,6 +94,19 @@ const defs=svg.querySelector('defs');
 const layer=document.getElementById('pieces');
 const dialog=document.getElementById('info');
 const introductions=[["衬衫", "浆洗好的白衬衫。板正笔挺，几乎像纸一样的触感。大概用了很多的化学洗剂才能达到这个程度。完全没有气味啊。"], ["光学聚焦器", "地狱没有阳光。“不见天日”，对么？被用以聚集烛光，火光，目光"], ["这是啥", "这是啥？哪个机器上掉下来的橡胶盖。有鬼要倒霉了。"], ["墨水", "一瓶墨水。"], ["墨水", "另一瓶墨水。"], ["液体容器（有星形标识）", "和大厂工牌一个道理。"], ["点燃器", "它会让你很烫！小心点。"], ["被点燃器", "卷着一些烟草……我希望只是烟草。"], ["保护你的财物", "带着它去赚取更多财产吧，没有生产资料的可怜人。"], ["背包底部肮脏的小纸片……别说你没有。", "没人知道这是什么。翻开这张口香糖包装纸，你也许会看到一串女人用眼线胶笔写下的电话号码。"], ["止痛药", "不是那种不需要处方的垃圾货。你、你在暗示这是吗啡的类似物吗？啊……奇怪的是。他只用它们来克制头痛，而并不滥用。"], ["尖锐物品（请进黄色医疗废物箱）", "因为他更爱滥用这个。"], ["薄荷味粒状清口糖", "是么？里面也许有几粒西地那非。不，只是……也许。"], ["亲人", "死者的遗物。"], ["街上发的能量棒", "暂时还饿不死。"], ["黑框，黑框", "黑框，黑框……死人有什么好黑框的？全家福而已，就差一个人就可以变成全家大遗照了。"], ["Михаил Юрьевич Игнатов", "完完全全是一个普通的，可悲的男人。拼尽全力也只是存活着而已。已经完全忘记存活的意义是什么却也想要活下去的人。"], ["Marzanna", "想让他死的人。(don't take it personally!)"], ["专武", "收割灵魂用的镰刀。"], ["笔记本，以及", "世界上最难搞定的目标档案。"], ["身份证件", "丢了这个，你可得费点功夫才能和长官们证明你是你了。"], ["bullshit", "本故事纯属虚构，人物、背景、情节皆为艺术创作，请勿与现实人物及事件对号入座。"], ["肛塞", "别那么叫钢笔！真不礼貌。"], ["培养皿", "我的意思是，浴缸。"]];
+const touchLayout=()=>matchMedia('(hover:none) and (pointer:coarse)').matches;
+let pendingInfo=null;
+const feedbackTimers=new WeakMap();
+function clearFeedbackTimer(group){clearTimeout(feedbackTimers.get(group));}
+function releaseFeedback(group,delay=0){
+ clearFeedbackTimer(group);
+ feedbackTimers.set(group,setTimeout(()=>group.classList.remove('touch-feedback'),delay));
+}
+function updateTouchLift(){
+ const width=svg.getBoundingClientRect().width;
+ if(width>0)svg.style.setProperty('--touch-lift',(-5*1536/width)+'px');
+}
+updateTouchLift();window.addEventListener('resize',updateTouchLift);
 let selected=null;
 let regionClicks=0;
 let sequenceCanExit=false;
@@ -146,7 +169,7 @@ function flashSequenceWords(){
  }
 }
 async function startSequence(){
- sequenceActive=true;sequenceCanExit=false;sequenceQueue=[];sequencePrevious=null;
+ sequenceActive=true;clearTimeout(pendingInfo);pendingInfo=null;document.querySelectorAll('.touch-feedback').forEach(group=>{clearFeedbackTimer(group);group.classList.remove('touch-feedback');});sequenceCanExit=false;sequenceQueue=[];sequencePrevious=null;
  const run=++sequenceRun;
  if(dialog.open)dialog.close();
  document.body.classList.add('sequence-active');
@@ -210,12 +233,25 @@ regions.forEach(region=>{
  }
  group.append(hitLayer);
  if(isArm)return;
- const show=()=>{if(sequenceActive)return;regionClicks++;if(regionClicks>=15){selected=group;startSequence();return;}const [title,description]=introductions[region.id-1];document.getElementById('heading').textContent=title;document.getElementById('description').textContent=description;selected=group;group.classList.add('active');dialog.dataset.region=region.id;const now=new Date();const clock=document.getElementById('dialog-time');clock.dateTime=now.toISOString();clock.textContent=now.toLocaleString('zh-CN',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});dialog.showModal();};
- group.addEventListener('click',show);group.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();show();}});layer.append(group);
+ const show=(event={type:'keydown'})=>{if(sequenceActive||pendingInfo!==null||dialog.open)return;regionClicks++;if(regionClicks>=15){selected=group;startSequence();return;}const [title,description]=introductions[region.id-1];document.getElementById('heading').textContent=title;document.getElementById('description').textContent=description;selected=group;group.classList.add('active');dialog.dataset.region=region.id;const now=new Date();const clock=document.getElementById('dialog-time');clock.dateTime=now.toISOString();clock.textContent=now.toLocaleString('zh-CN',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+ const openInfo=()=>{pendingInfo=null;if(!sequenceActive)dialog.showModal();};
+ if(touchLayout()&&event.type!=='keydown'){
+  clearFeedbackTimer(group);group.classList.add('touch-feedback');
+  pendingInfo=setTimeout(openInfo,200);
+ }else openInfo();
+};
+ group.addEventListener('pointerdown',event=>{
+ if(event.pointerType!=='touch'||sequenceActive||dialog.open||pendingInfo!==null||group.classList.contains('character'))return;
+ clearFeedbackTimer(group);group.classList.add('touch-feedback');
+});
+group.addEventListener('pointerup',event=>{if(event.pointerType==='touch')releaseFeedback(group,300);});
+group.addEventListener('pointercancel',()=>releaseFeedback(group));
+group.addEventListener('pointerleave',event=>{if(event.pointerType==='touch'&&!group.classList.contains('active'))releaseFeedback(group);});
+group.addEventListener('click',show);group.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();show();}});layer.append(group);
 });
 document.getElementById('close').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{if(event.target===dialog){const box=dialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();}});
-dialog.addEventListener('close',()=>{if(selected){selected.classList.remove('active');if(!sequenceActive)selected.focus();}});
+dialog.addEventListener('close',()=>{if(selected){selected.classList.remove('active');if(touchLayout()&&!sequenceActive&&!selected.classList.contains('character')){selected.classList.add('touch-feedback');releaseFeedback(selected,400);}if(!sequenceActive)selected.focus();}});
 document.getElementById('guides').addEventListener('click',event=>{const visible=svg.classList.toggle('guides');event.currentTarget.setAttribute('aria-pressed',String(visible));});
 </script>
 </html>
