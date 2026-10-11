@@ -11,9 +11,10 @@
 @media(prefers-reduced-motion:reduce){.piece .visual{transition:none}.piece:hover .visual,.piece:focus-visible .visual,.piece.active .visual{transform:none}}
 .bar>span{font-size:28px;font-weight:bold;align-self:center}
 
-#black-sequence{position:fixed;inset:0;z-index:1000;margin:0;padding:16px;background:#000;color:#fff;overflow:hidden;font-family:'DotGothic16',sans-serif;font-size:clamp(21px,3vw,34px);line-height:1.55;overflow-wrap:anywhere;user-select:none}
+#black-sequence{position:fixed;inset:0;z-index:1000;margin:0;padding:16px;background:#000;color:#fff;overflow:hidden;font-family:'DotGothic16',sans-serif;font-weight:400;font-size:clamp(21px,3vw,34px);line-height:1.55;overflow-wrap:anywhere;user-select:none;white-space:pre-wrap}
 #black-sequence[hidden]{display:none}
 body.sequence-active{overflow:hidden}
+
 </style>
 <link rel="stylesheet" href="../overarching/global.css">
 <script src="../overarching/global.js" defer></script>
@@ -85,13 +86,16 @@ const dialog=document.getElementById('info');
 const introductions=[["衬衫", "浆洗好的白衬衫。板正笔挺，几乎像纸一样的触感。大概用了很多的化学洗剂才能达到这个程度。完全没有气味啊。"], ["光学聚焦器", "地狱没有阳光。“不见天日”，对么？被用以聚集烛光，火光，目光"], ["这是啥", "这是啥？哪个机器上掉下来的橡胶盖。有鬼要倒霉了。"], ["墨水", "一瓶墨水。"], ["墨水", "另一瓶墨水。"], ["液体容器（有星形标识）", "和大厂工牌一个道理。"], ["点燃器", "它会让你很烫！小心点。"], ["被点燃器", "卷着一些烟草……我希望只是烟草。"], ["保护你的财物", "带着它去赚取更多财产吧，没有生产资料的可怜人。"], ["背包底部肮脏的小纸片……别说你没有。", "没人知道这是什么。翻开这张口香糖包装纸，你也许会看到一串女人用眼线胶笔写下的电话号码。"], ["止痛药", "不是那种不需要处方的垃圾货。你、你在暗示这是吗啡的类似物吗？啊……奇怪的是。他只用它们来克制头痛，而并不滥用。"], ["尖锐物品（请进黄色医疗废物箱）", "因为他更爱滥用这个。"], ["薄荷味粒状清口糖", "是么？里面也许有几粒西地那非。不，只是……也许。"], ["亲人", "死者的遗物。"], ["街上发的能量棒", "暂时还饿不死。"], ["黑框，黑框", "黑框，黑框……死人有什么好黑框的？全家福而已，就差一个人就可以变成全家大遗照了。"], ["Михаил Юрьевич Игнатов", "完完全全是一个普通的，可悲的男人。拼尽全力也只是存活着而已。已经完全忘记存活的意义是什么却也想要活下去的人。"], ["Marzanna", "想让他死的人。(don't take it personally!)"], ["专武", "收割灵魂用的镰刀。"], ["笔记本，以及", "世界上最难搞定的目标档案。"], ["身份证件", "丢了这个，你可得费点功夫才能和长官们证明你是你了。"], ["bullshit", "本故事纯属虚构，人物、背景、情节皆为艺术创作，请勿与现实人物及事件对号入座。"], ["肛塞", "别那么叫钢笔！真不礼貌。"], ["培养皿", "我的意思是，浴缸。"]];
 let selected=null;
 let regionClicks=0;
-let sequenceAppearances=0;
+let sequenceCanExit=false;
+let sequenceVisibleLimit=0;
 let sequenceActive=false;
 let sequenceTimer=null;
-const sequenceWords=["肉親", "代替可能", "信仰", "党派", "君との約束", "任務完了", "納期遵守率", "必達事項", "職務専念義務", "ノルマ", "党議拘束", "適正処理", "業務命令", "身内", "標的", "敬愛する", "困惑", "地獄", "決裁", "死刑執行", "達成不能", "方針転換"];
+const sequenceWords=["肉親", "代替可能", "信仰", "党派", "君との約束", "任務完了", "納期遵守率", "必達事項", "職務専念義務", "ノルマ", "党議拘束", "適正処理", "業務命令", "身内", "標的", "敬愛する", "困惑", "地獄", "決裁", "死刑執行", "達成不能？？", "方針転換", "愛"];
 const sequenceScreen=document.getElementById('black-sequence');
 const sequenceText=document.getElementById('sequence-text');
-let sequencePending='';
+const sequencePassage="長年にわたり、「取り得るものはすべて取り入れる」という考え方は、常に解決が困難な課題であり続けてきました。ある意味で、「取り得るものはすべて取り入れる」という問題を徹底的に解決できるかどうかは、競争力の確保、基本方針の確立、改善の進展、反映の促進、解決策の策定に関わるものであり、任務を明確にする上で最優先事項です。したがって、「取り得るものはすべて取り入れる」という問題を解決することは、厳格な実行を要する取り組みです。「可能な限りすべてを取り込む」という取り組みの発展史を概観すると、各国は絶えずネットワークの改善と充実を図り、機能を整備し、施策を集約し、その基盤の上に、さらなる改善を追求している。品質を例に挙げると、パナマ政府は「可能な限りすべてを取り込む」ために、絶えず改善を図る政策を採用し、成果を上げた。この鮮明な事例が示すように、「取り得るものはすべて取り入れる」という目的を実現するためには、継承と参考を通じて協調性を高め、真実を追求し実務を重んじる態度で、「取り得るものはすべて取り入れる」業務の制度化を積極的に推進し、サービスの最適化を目的として「取り得るものはすべて取り入れる」業務の正常化を積極的に推進し、質の向上とスピードアップを責務として「取り得るものはすべて取り入れる」業務の手順化を積極的に推進し、円滑かつ安全な運営を保障として、 「取り得るものはすべて取り入れる」業務のスマート化を積極的に推進し、記録を残すことを教訓として、「取り得るものはすべて取り入れる」業務の規範化を積極的に推進し、問題解決を重点として、「取り得るものはすべて取り入れる」業務の秩序化を積極的に推進し、機関への奉仕を宗旨として、「取り得るものはすべて取り入れる」サービスの質的向上を積極的に推進し、全体的な調整を重点として、「取り得るものはすべて取り入れる」業務の常態化を積極的に推進する。新時代の到来に伴い、我々の「取り得るものはすべて取り切る」取り組みは歴史的な飛躍的発展を遂げ、調整体制は着実に強化・向上し、その規模は劇的な変化を遂げた。地方の発展の歩みは加速し、着実かつ良好な発展を遂げている。現在、我々はすでに保証している";
+let sequencePassageIndex=0;
+let sequenceRun=0;
 let sequencePrevious=null;
 let sequenceQueue=[];
 function nextSequenceWord(){
@@ -109,29 +113,57 @@ function nextSequenceWord(){
  return sequencePrevious;
 }
 function typeSequence(){
- if(!sequenceActive)return;
- if(!sequencePending){
-  sequencePending=nextSequenceWord()+'、';
- }
- const letter=sequencePending[0];sequencePending=sequencePending.slice(1);
+ if(!sequenceActive||sequencePassageIndex>=sequencePassage.length)return;
+ if(sequencePassageIndex>=sequenceVisibleLimit){sequenceCanExit=true;return;}
+ const letter=sequencePassage[sequencePassageIndex++];
+ if(sequencePassageIndex>=Math.ceil(sequenceVisibleLimit/2))sequenceCanExit=true;
  sequenceText.append(document.createTextNode(letter));
  if(sequenceText.offsetHeight>sequenceScreen.clientHeight-32){sequenceText.lastChild.remove();return;}
  sequenceTimer=setTimeout(typeSequence,matchMedia('(prefers-reduced-motion: reduce)').matches?60:24);
 }
+function measureVisiblePassage(){
+ // Measure in the actual mobile/desktop viewport using the loaded font.
+ let low=0,high=sequencePassage.length;
+ while(low<high){
+  const middle=Math.ceil((low+high)/2);
+  sequenceText.textContent=sequencePassage.slice(0,middle);
+  if(sequenceText.offsetHeight<=sequenceScreen.clientHeight-32)low=middle;
+  else high=middle-1;
+ }
+ sequenceText.replaceChildren();return low;
+}
+function flashSequenceWords(){
+ // Fill synchronously: the whole word screen appears at once.
+ for(let i=0;i<10000;i++){
+  const word=nextSequenceWord();
+  const part=document.createElement('span');
+  if(word==='愛'){
+   const emphasis=document.createElement('strong');emphasis.textContent=word;
+   part.append(emphasis,document.createTextNode('、'));
+  }else part.textContent=word+'、';
+  sequenceText.append(part);
+  if(sequenceText.offsetHeight>sequenceScreen.clientHeight-32){part.remove();break;}
+ }
+}
 async function startSequence(){
- sequenceActive=true;sequenceAppearances++;sequenceQueue=[];sequencePrevious=null;
+ sequenceActive=true;sequenceCanExit=false;sequenceQueue=[];sequencePrevious=null;
+ const run=++sequenceRun;
  if(dialog.open)dialog.close();
  document.body.classList.add('sequence-active');
  sequenceScreen.hidden=false;sequenceScreen.focus();
  try{await document.fonts.load('24px DotGothic16');}catch(error){/* System fallback remains readable. */}
- if(!sequenceActive)return;
- typeSequence();
+ if(!sequenceActive||run!==sequenceRun)return;
+ sequenceText.replaceChildren();sequenceVisibleLimit=measureVisiblePassage();flashSequenceWords();
+ sequenceTimer=setTimeout(()=>{
+  if(!sequenceActive||run!==sequenceRun)return;
+  sequenceText.replaceChildren();sequencePassageIndex=0;typeSequence();
+ },400);
 }
 function exitSequence(){
- if(!sequenceActive)return;
+ if(!sequenceActive||!sequenceCanExit)return;
  sequenceActive=false;clearTimeout(sequenceTimer);sequenceScreen.hidden=true;
  document.body.classList.remove('sequence-active');
- sequenceText.replaceChildren();sequencePending='';regionClicks=0;
+ sequenceRun++;sequenceText.replaceChildren();sequencePassageIndex=0;regionClicks=0;
  if(selected)selected.focus();
 }
 sequenceScreen.addEventListener('click',exitSequence);
@@ -178,7 +210,7 @@ regions.forEach(region=>{
  }
  group.append(hitLayer);
  if(isArm)return;
- const show=()=>{if(sequenceActive)return;regionClicks++;if(regionClicks>=(sequenceAppearances===0?10:regions.length)){selected=group;startSequence();return;}const [title,description]=introductions[region.id-1];document.getElementById('heading').textContent=title;document.getElementById('description').textContent=description;selected=group;group.classList.add('active');dialog.dataset.region=region.id;const now=new Date();const clock=document.getElementById('dialog-time');clock.dateTime=now.toISOString();clock.textContent=now.toLocaleString('zh-CN',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});dialog.showModal();};
+ const show=()=>{if(sequenceActive)return;regionClicks++;if(regionClicks>=15){selected=group;startSequence();return;}const [title,description]=introductions[region.id-1];document.getElementById('heading').textContent=title;document.getElementById('description').textContent=description;selected=group;group.classList.add('active');dialog.dataset.region=region.id;const now=new Date();const clock=document.getElementById('dialog-time');clock.dateTime=now.toISOString();clock.textContent=now.toLocaleString('zh-CN',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});dialog.showModal();};
  group.addEventListener('click',show);group.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();show();}});layer.append(group);
 });
 document.getElementById('close').addEventListener('click',()=>dialog.close());
